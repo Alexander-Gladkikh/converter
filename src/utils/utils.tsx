@@ -11,7 +11,6 @@ export const convertCurrency = (exchangeRates: Rates, currencyFrom: string, curr
   if (exchangeRates[currencyFrom]?.value && exchangeRates[currencyTo]?.value) {
     const bitcoinPriceFrom = exchangeRates[currencyFrom].value;
     const bitcoinPriceTo = exchangeRates[currencyTo].value;
-    console.log(bitcoinPriceFrom, bitcoinPriceTo)
     const bitcoinAmount = amount / bitcoinPriceFrom; // Количество биткоинов в исходной валюте
     return  bitcoinAmount * bitcoinPriceTo; // Конвертированная сумма в целевую валюту
 
