@@ -8,6 +8,23 @@
   padding-left: 16px;
 }
 
+.container {
+  width: 1024px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  row-gap: 28px;
+}
+@media screen and (max-width: 1100px) {
+  .container {
+    width: 100vw;
+    padding: 5px;
+  }
+}
+
 .formInputs {
   display: flex;
   align-items: center;

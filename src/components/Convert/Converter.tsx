@@ -10,13 +10,14 @@ import {InputField} from "../InputField/InputField.tsx";
 import s from './Convert.module.scss';
 import arrowsImg from '../../assets/image/arrows.svg'
 import equalsImg from "../../assets/image/equals.svg"
+import Header from "../Header/Header.tsx";
 
 const Converter = () => {
   const [tickerCoins, setTickerCoins] = useState<string[]>([]);
   const [exchangeRates, setExchangeRates] = useState<Rates>({});
 
-  const [valueFrom, setValueFrom] = useState<string>('BTC');
-  const [valueTo, setValueTo] = useState<string>('BTC');
+  const [valueFrom, setValueFrom] = useState<string>('btc');
+  const [valueTo, setValueTo] = useState<string>('btc');
 
   const [coinNameFrom, setCoinNameFrom] = useState<string>('Bitcoin');
   const [coinNameTo, setCoinNameTo] = useState<string>('Bitcoin');
@@ -41,8 +42,8 @@ const Converter = () => {
   const formik = useFormik({
     initialValues: {
       amount: 0,
-      from: 'BTC',
-      to: 'BTC'
+      from: 'btc',
+      to: 'btc'
     },
     validationSchema: Yup.object({
       amount: Yup.number().required('Required').positive().min(0),
@@ -59,64 +60,66 @@ const Converter = () => {
     },
   });
   return (
-    <form className={s.form} onSubmit={formik.handleSubmit}>
-      <div className={s.formInputs}>
+    <div className={s.container}>
+      <Header/>
+      <form className={s.form} onSubmit={formik.handleSubmit}>
+        <div className={s.formInputs}>
 
-        <InputField
-          value={formik.values.amount}
-          name={"amount"}
-          id={"amount"}
-          label={"amount"}
-          type={"number"}
-          error={formik.errors.amount}
-          touched={formik.touched.amount}
-          onBlur={formik.handleBlur}
-          onChange={formik.handleChange}
-        />
+          <InputField
+            value={formik.values.amount}
+            name={"amount"}
+            id={"amount"}
+            label={"amount"}
+            type={"number"}
+            error={formik.errors.amount}
+            touched={formik.touched.amount}
+            onBlur={formik.handleBlur}
+            onChange={formik.handleChange}
+          />
 
 
-      <div className={s.formSelects}>
-        <SelectField
-          value={formik.values.from}
-          name={"from"}
-          id={"from"}
-          label={"from"}
-          error={formik.errors.from}
-          touched={formik.touched.from}
-          options={optionsList(tickerCoins)}
-          onBlur={formik.handleBlur}
-          onChange={formik.handleChange}
-        />
+          <div className={s.formSelects}>
+            <SelectField
+              value={formik.values.from}
+              name={"from"}
+              id={"from"}
+              label={"from"}
+              error={formik.errors.from}
+              touched={formik.touched.from}
+              options={optionsList(tickerCoins)}
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+            />
 
-        <div className={s.formSelectIcon}>
-          <img src={arrowsImg} alt="arrows" />
+            <div className={s.formSelectIcon}>
+              <img src={arrowsImg} alt="arrows"/>
+            </div>
+
+            <SelectField
+              value={formik.values.to}
+              name={"to"}
+              id={"to"}
+              label={"To"}
+              error={formik.errors.to}
+              touched={formik.touched.to}
+              options={optionsList(tickerCoins)}
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+            />
+          </div>
+
         </div>
 
-        <SelectField
-          value={formik.values.to}
-          name={"to"}
-          id={"to"}
-          label={"To"}
-          error={formik.errors.to}
-          touched={formik.touched.to}
-          options={optionsList(tickerCoins)}
-          onBlur={formik.handleBlur}
-          onChange={formik.handleChange}
-        />
-      </div>
-
-      </div>
-
-      <div className={s.formResults}>
-        <CurrencyCard id={'from'} tickerName={valueFrom} coinName={coinNameFrom} currencyValue={amount}/>
-        <div className={s.formResultEquals}>
-          <img src={equalsImg} alt={"equals image"}/>
+        <div className={s.formResults}>
+          <CurrencyCard id={'from'} tickerName={valueFrom} coinName={coinNameFrom} currencyValue={amount}/>
+          <div className={s.formResultEquals}>
+            <img src={equalsImg} alt={"equals image"}/>
+          </div>
+          <CurrencyCard id={'to'} tickerName={valueTo} coinName={coinNameTo} currencyValue={convertedAmount}/>
+          <button className={s.convertedButton} type="submit">Converter</button>
         </div>
-        <CurrencyCard id={'to'} tickerName={valueTo} coinName={coinNameTo} currencyValue={convertedAmount}/>
-        <button className={s.convertedButton} type="submit">Converter</button>
-      </div>
-
-    </form>
+      </form>
+    </div>
   )
 };
 
